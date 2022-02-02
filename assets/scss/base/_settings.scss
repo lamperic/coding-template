@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+// media queryのbreakpoint値
+$breakpointS: 768px;
+$breakpointM: 1025px;
+$breakpointL: 1400px;
+
+// ボックス幅(max-width)
+$widthS: 700px;
+$widthM: 920px;
+$widthL: 1024px;
+$widthXL: 1280px;
+
+// ヘッダーの高さ(PC,SP)
+$headerHeight: 100px;
+$headerHeightSP: 50px;
+
+// セクション間のスペース(PC,SP)
+$sectionPadding: 100px;
+$sectionPaddingSP: 50px;
+
+// margin,paddingの汎用サイズ
+$spacesList: (
+  xs: 10px,
+  s: 20px,
+  sm: 30px,
+  m: 40px,
+  ml: 60px,
+  l: 80px,
+  xl: 100px,
+);
+
+// フォントサイズ
+$fontSizeList: (
+  xs: 1.2rem,
+  s: 1.4rem,
+  sm: 1.6rem,
+  m: 1.8rem,
+  ml: 2rem,
+  l: 2.4rem,
+  xl: 2.8rem,
+);
+
+// letteer spacing
+$letterSpacingList: (
+  s: 0.1em,
+  m: 0.2em,
+  l: 0.25em,
+);
+
+// bodyにかかる基本色
+$baseColor: #222;
+$baseBg: #fff;
+
+// 色
+$colorList: (
+  primary: #73c7db,
+  secondary: #c33b78,
+  accent: #86b945,
+  caution: #f23420,
+  additional1: #fce3a0,
+  white: #fff,
+  black: $baseColor,
+);
+
+// ::selectionカラー（テキスト選択時の色）
+$selectionBg: #{rgba(127, 83, 17, 0.8)};
+$selectionColor: #fff;
+
+// 基本フォント
+$primaryFont: "Noto Sans JP", YuGothic, "Yu Gothic Medium", "Yu Gothic",
+  -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", "Helvetica Neue",
+  HelveticaNeue, Verdana, Meiryo, sans-serif;
+$primaryFontWeight: 400;
+$secondaryFont: "Lato", sans-serif;
+$secondaryFontweight: 400;
+
+// ヘッダー固定(position:fixedさせるかどうか)
+$fixedHeader: true;
+
+// margin,paddingの細かい汎用classを生成するかどうかの設定（別途xs〜xlまでのclassはあるので基本的に不要かも）
+// endValueは5の倍数でいくつ出すか（例：20なら.mb100まで作られる）
+// 不要なら$spaceClassをfalseに、paddingだけ不要なら$spacePaddingをfalseに指定
+$spaceClass: false !default;
+$spacePadding: false !default;
+$endValue: 20 !default;
+
+// widthの汎用classを生成するかどうかの設定（.w1〜.w100まで）
+$widthClass: true !default;

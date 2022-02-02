@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+// remをvwに変換する
+// 第一引数：変換させたいrem値(1rem),第二引数(オプション)：breakpoint値(1025px)
+// 例；font-size: rem-vw(1.6rem,1024px);
+@function rem-vw($remValue: 1rem, $remBreakpoint: $breakpointM) {
+  $remVal: (($remValue * 10) / 1rem);
+  @return (($remVal / ($remBreakpoint / 1px)) * 100) + vw;
+}
+
+// pxをvwに変換する
+// 第一引数：変換させたいpx値(10px),第二引数(オプション)：breakpoint値(1025px)
+// 例；font-size: px-vw(16px,1024px);
+@function px-vw($pxValue: 10px, $pxBreakpoint: $breakpointM) {
+  @return (($pxValue / $pxBreakpoint) * 100) + vw;
+}
+
+// settingsで設定されているカラーを取得する
+// 例；color: color(primary);
+@function color($color) {
+  @return #{map-get($colorList, $color)};
+}
+
+// settingsで設定されているfont-sizeを取得する
+// 例；font-size: fontSize(xs);
+@function fontSize($fz) {
+  @return #{map-get($fontSizeList, $fz)};
+}
+
+// メディアクエリ
+@mixin mqS {
+  // 767px以下の場合
+  @media (max-width: ($breakpointS - 1)) {
+    @content;
+  }
+}
+
+@mixin mqSM {
+  // 768px〜1024pxの場合
+  @media (min-width: $breakpointS) and (max-width: ($breakpointM - 1)) {
+    @content;
+  }
+}
+
+@mixin mqM {
+  // 768px以上の場合
+  @media (min-width: $breakpointM) {
+    @content;
+  }
+}
+
+@mixin mqML {
+  // 1025px〜1400pxの場合
+  @media (min-width: $breakpointM) and (max-width: $breakpointL) {
+    @content;
+  }
+}
+
+@mixin mqL {
+  // 1401以上の場合
+  @media (min-width: ($breakpointL + 1)) {
+    @content;
+  }
+}
+
+// 右向き矢印
+@mixin arw(
+  $direction: right,
+  $size: 5px,
+  $borderWidth: 1px,
+  $borderColor: color(black),
+  $posHorizontal: 0,
+  $posTop: 2px,
+  $hoverPosHorizontal: 2px
+) {
+  position: relative;
+  &:after {
+    content: "";
+    width: $size;
+    height: $size;
+    border-bottom: $borderWidth solid $borderColor;
+    position: absolute;
+    top: calc(50% - #{$posTop});
+    transition: 0.2s;
+    @if $direction == right {
+      border-right: $borderWidth solid $borderColor;
+      right: $posHorizontal;
+      transform: rotate(-45deg);
+    } @else {
+      border-left: $borderWidth solid $borderColor;
+      left: $posHorizontal;
+      transform: rotate(45deg);
+    }
+  }
+  @include mqM {
+    transition: 0.2s;
+    &:hover {
+      &:after {
+        @if $direction == right {
+          right: $hoverPosHorizontal;
+        } @else {
+          left: $hoverPosHorizontal;
+        }
+      }
+    }
+  }
+}
+
+// font-family
+@mixin font($fontFamily: $secondaryFont, $fontWeight: $secondaryFontweight) {
+  font-family: $fontFamily;
+  font-weight: $fontWeight;
+}
+
+// flexboxのliリスト
+// 例：@include flexList(4,20%,wrap);で4つ並びで幅20%のリストが生成される
+@mixin flexList(
+  $column: 2,
+  $eachWidth: 50%,
+  $columnSP: 2,
+  $eachWidthSP: 50%,
+  $flexWrap: wrap
+) {
+  display: flex;
+  flex-wrap: $flexWrap;
+  li {
+    width: $eachWidth;
+    @include mqS {
+      width: $eachWidthSP;
+    }
+    &:not(:nth-of-type(#{$column}n)) {
+      margin-right: calc(
+        (100% - (#{$column} * #{$eachWidth})) / (#{$column} - 1)
+      );
+      @include mqS {
+        margin-right: inherit;
+      }
+    }
+    @include mqS {
+      &:not(:nth-of-type(#{$columnSP}n)) {
+        margin-right: calc(
+          (100% - (#{$columnSP} * #{$eachWidthSP})) / (#{$columnSP} - 1)
+        );
+      }
+    }
+  }
+}
+
+// dl要素の+-のアコーディオン（jsとの兼ね合いで.toggle-navに記載）
+@mixin toggleNav(
+  $toggleIconSize: 18px,
+  $toggleIconThickness: 1px,
+  $toggleIconPosition: 10px,
+  $toggleIconColor: #333
+) {
+  dt {
+    position: relative;
+    cursor: pointer;
+    &:before {
+      content: "";
+      width: $toggleIconSize;
+      height: $toggleIconThickness;
+      background: $toggleIconColor;
+      position: absolute;
+      right: $toggleIconPosition;
+      top: calc(50% - (#{$toggleIconThickness} / 2));
+    }
+    &:after {
+      content: "";
+      width: $toggleIconThickness;
+      height: $toggleIconSize;
+      background: $toggleIconColor;
+      position: absolute;
+      right: calc(
+        #{$toggleIconPosition} + (#{$toggleIconSize} / 2) - (#{$toggleIconThickness} /
+              2)
+      );
+      top: calc(50% - (#{$toggleIconSize} / 2));
+      transition: 0.2s;
+    }
+    &.is-active {
+      &:after {
+        transform: scaleY(0);
+      }
+    }
+  }
+  dd {
+    display: none;
+  }
+}
+
+// keyframesアニメーション
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}

@@ -1,0 +1,369 @@
+@charset "UTF-8";
+
+/* -----------------------------
+
+utility style
+
+----------------------------- */
+
+/* margin,padding汎用class */
+
+// margin,padding汎用class(詳細版：settings.scssでON/OFF設定)
+@if $spaceClass {
+  @for $i from 0 through $endValue {
+    .mt#{$i * 5} {
+      margin-top: 5px * $i;
+    }
+    .mb#{$i * 5} {
+      margin-bottom: 5px * $i;
+    }
+    @if $spacePadding {
+      .pt#{$i * 5} {
+        padding-top: 5px * $i;
+      }
+      .pb#{$i * 5} {
+        padding-bottom: 5px * $i;
+      }
+    }
+  }
+}
+// margin,padding汎用class(基本はこちらを利用)
+@each $key, $space in $spacesList {
+  .mb-#{$key} {
+    margin-bottom: $space;
+  }
+  .mt-#{$key} {
+    margin-top: $space;
+  }
+  .pb-#{$key} {
+    padding-bottom: $space;
+  }
+  .pt-#{$key} {
+    padding-top: $space;
+  }
+  @include mqSM {
+    .tb-mb-#{$key} {
+      margin-bottom: $space;
+    }
+    .tb-mt-#{$key} {
+      margin-top: $space;
+    }
+    .tb-pb-#{$key} {
+      padding-bottom: $space;
+    }
+    .tb-pt-#{$key} {
+      padding-top: $space;
+    }
+  }
+  @include mqS {
+    .sp-mb-#{$key} {
+      margin-bottom: $space;
+    }
+    .sp-mt-#{$key} {
+      margin-top: $space;
+    }
+    .sp-pb-#{$key} {
+      padding-bottom: $space;
+    }
+    .sp-pt-#{$key} {
+      padding-top: $space;
+    }
+  }
+}
+
+// width汎用class(settings.scssでON/OFF設定)
+/* width汎用class */
+@if $widthClass {
+  @for $i from 0 through 100 {
+    .w#{$i} {
+      width: percentage($i / 100);
+    }
+    @include mqS {
+      .sp-w#{$i} {
+        width: percentage($i / 100);
+      }
+    }
+  }
+}
+
+/* font-size汎用class */
+@each $key, $fz in $fontSizeList {
+  .fz-#{$key} {
+    font-size: $fz;
+    @include mqSM {
+      font-size: rem-vw($fz, 1024px);
+    }
+  }
+}
+
+@each $key, $fz in $fontSizeList {
+  @include mqS {
+    .sp-fz-#{$key} {
+      font-size: $fz;
+    }
+  }
+}
+
+/* letter-spacing汎用class */
+@each $key, $ls in $letterSpacingList {
+  .ls-#{$key} {
+    letter-spacing: $ls;
+  }
+}
+
+/* color系汎用class */
+@each $key, $color in $colorList {
+  .color-#{$key} {
+    color: $color;
+  }
+  a.color-#{$key} {
+    color: $color;
+  }
+  .bg-#{$key} {
+    background-color: $color;
+  }
+}
+
+/* text-align */
+
+.ta-l {
+  text-align: left;
+}
+
+.ta-c {
+  text-align: center;
+}
+
+.ta-r {
+  text-align: right;
+}
+
+.ta-j {
+  text-align: justify;
+}
+
+@include mqS {
+  .sp-ta-l {
+    text-align: left;
+  }
+
+  .sp-ta-c {
+    text-align: center;
+  }
+
+  .sp-ta-r {
+    text-align: right;
+  }
+
+  .sp-ta-j {
+    text-align: justify;
+  }
+}
+
+/* flex */
+
+.flex {
+  display: flex;
+}
+
+.fw-w {
+  flex-wrap: wrap;
+}
+
+.fd-r {
+  flex-direction: row;
+}
+
+.fd-rr {
+  flex-direction: row-reverse;
+}
+
+.fd-cr {
+  flex-direction: column-reverse;
+}
+
+.fd-c {
+  flex-direction: column;
+}
+
+.jc-c {
+  justify-content: center;
+}
+
+.jc-sb {
+  justify-content: space-between;
+}
+
+.jc-sa {
+  justify-content: space-around;
+}
+
+.jc-fe {
+  justify-content: flex-end;
+}
+
+.jc-fs {
+  justify-content: flex-start;
+}
+
+.ai-c {
+  align-items: center;
+}
+
+.ai-fe {
+  align-items: flex-end;
+}
+
+.ai-fs {
+  align-items: flex-start;
+}
+
+@include mqS {
+  .sp-fw-w {
+    flex-wrap: wrap;
+  }
+
+  .sp-fd-r {
+    flex-direction: row;
+  }
+
+  .sp-fd-rr {
+    flex-direction: row-reverse;
+  }
+
+  .sp-fd-cr {
+    flex-direction: column-reverse;
+  }
+
+  .sp-fd-c {
+    flex-direction: column;
+  }
+
+  .sp-jc-c {
+    justify-content: center;
+  }
+
+  .sp-jc-sb {
+    justify-content: space-between;
+  }
+
+  .sp-jc-sa {
+    justify-content: space-around;
+  }
+
+  .sp-jc-fe {
+    justify-content: flex-end;
+  }
+
+  .sp-jc-fs {
+    justify-content: flex-start;
+  }
+
+  .sp-ai-c {
+    align-items: center;
+  }
+
+  .sp-ai-fe {
+    align-items: flex-end;
+  }
+
+  .sp-ai-fs {
+    align-items: flex-start;
+  }
+}
+
+// object fit
+
+.ofi {
+  object-fit: cover;
+  object-position: center;
+  font-family: "object-fit: cover;";
+  width: 100%;
+  height: 100%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.fw-n {
+  font-weight: normal;
+}
+
+// position
+
+.pos-r {
+  position: relative;
+}
+
+// inviewアニメーション
+
+.anm {
+  transition: 1s;
+  &.fading {
+    opacity: 0;
+  }
+  &.to-up {
+    transform: translateY(20px);
+  }
+  &.to-down {
+    transform: translateY(-20px);
+  }
+  &.to-right {
+    transform: translateX(-10px);
+  }
+  &.to-left {
+    transform: translateX(10px);
+  }
+  &.to-left-zoomin {
+    transform: translateX(10px) scale(0.9);
+    transform-origin: right bottom;
+  }
+  &.blur {
+    filter: blur(10px);
+  }
+  &.ease-back {
+    transition-duration: 2s;
+    transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    &.to-up {
+      transform: translateY(40px);
+    }
+  }
+  &.is-show {
+    &.fading {
+      opacity: 1;
+    }
+    &.to-up {
+      transform: translateY(0px);
+    }
+    &.to-down {
+      transform: translateY(0px);
+    }
+    &.to-right {
+      transform: translateX(0px);
+    }
+    &.to-left {
+      transform: translateX(0px);
+    }
+    &.to-left-zoomin {
+      transition: 2s 0.4s;
+      transform: translateX(0px) scale(1);
+    }
+    &.blur {
+      filter: blur(0px);
+    }
+    &.delay1 {
+      transition-delay: 0.2s;
+    }
+    &.delay2 {
+      transition-delay: 0.4s;
+    }
+    &.ease-back {
+      transition-duration: 2s;
+      transition-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      &.to-up {
+        transform: translateY(0px);
+      }
+    }
+  }
+}
